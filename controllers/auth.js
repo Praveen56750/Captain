@@ -27,7 +27,6 @@ exports.login = async (req, res) => {
             token
         })
     } catch (err) {
-        console.log(err);
         res.status(400).json({
             status: "failure",
             message: err.message
@@ -54,7 +53,6 @@ exports.signup = async (req, res) => {
             message: "User created successfully"
         })
     } catch (err) {
-        console.log(err)
         res.status(400).json({
             status: "failure",
             message: err.message

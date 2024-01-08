@@ -1,8 +1,7 @@
-const express = require('express');
 const User = require('../models/user');
 const Privilege = require('../models/privilege');
 
-const isAdminAuthenticate = async (req, res, next) => {
+const isAdmin = async (req, res, next) => {
     const { id, role } = req.user
 
     const privilegeDetail = await Privilege.findOne({ name: req.method })
@@ -17,7 +16,7 @@ const isAdminAuthenticate = async (req, res, next) => {
         return res.status(401).json({ status: "failure", message: "Access denined you didn't have permission to access this end point" })
 }
 
-const isAuthenticate = async (req, res, next) => {
+const isUserOrAdmin = async (req, res, next) => {
     const { id, role } = req.user
 
     const { id: userId } = req.params
@@ -39,4 +38,4 @@ const isAuthenticate = async (req, res, next) => {
 }
 
 
-module.exports = { isAdminAuthenticate, isAuthenticate }
+module.exports = { isAdmin, isUserOrAdmin }
