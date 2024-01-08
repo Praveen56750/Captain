@@ -11,8 +11,7 @@ const jwtOptions = {
     secretOrKey: process.env.SECRET_KEY_JWT_PASSPORT
 }
 
-const strategy = new JwtStrategy(jwtOptions, async function (jwt_payload, next) {
-    console.log('payload received', jwt_payload);
+const strategy = new JwtStrategy(jwtOptions, async function (jwt_payload, done) {
     const id = jwt_payload.id;
     // usually this would be a database call:
     const userDetail = await User.findById(id).exec();
@@ -21,10 +20,11 @@ const strategy = new JwtStrategy(jwtOptions, async function (jwt_payload, next) 
         const user = {
             id: userDetail.id,
             role: userDetail.role,
+            privileges: userDetail.privilege
         };
-        next(null, user);
+        done(null, user);
     } else {
-        next(null, false);
+        done(null, false);
     }
 });
 

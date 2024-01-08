@@ -7,7 +7,6 @@ exports.login = async (req, res) => {
 
         // Check if email and password exist
         if (!email || !password) {
-            // return next(new AppError('Please provide email and password!', 400));
             res.status(401).json({ message: "Please provide email and password!" });
         }
 
@@ -27,7 +26,7 @@ exports.login = async (req, res) => {
             token
         })
     } catch (err) {
-        res.status(400).json({
+        res.status(500).json({
             status: "failure",
             message: err.message
         })
@@ -46,14 +45,14 @@ exports.logout = async (req, res) => {
 
 exports.signup = async (req, res) => {
     try {
-        const newUser = await User.create(req.body)
+        await User.create(req.body)
 
         res.status(200).json({
             status: "success",
             message: "User created successfully"
         })
     } catch (err) {
-        res.status(400).json({
+        res.status(500).json({
             status: "failure",
             message: err.message
         })

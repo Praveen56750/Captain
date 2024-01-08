@@ -8,15 +8,16 @@ const router = express.Router();
 
 router.use(user.alerts);
 
-router.get("/", passport.authenticate('jwt', { session: false }), isAdmin, user.usersList)
+router.get("/", passport.authenticate('jwt', { session: false }), isAdmin, user.fetchUsers)
 
-router.get("/:id", passport.authenticate('jwt', { session: false }), isUserOrAdmin, user.singleUser)
+router.get("/:id", passport.authenticate('jwt', { session: false }), isUserOrAdmin, user.fetchUser)
 
 router.post("/signup", auth.signup)
 
 router.post("/login", auth.login)
 
-router.get('/logout', auth.logout);
+router.put("/:id", passport.authenticate('jwt', { session: false }), isUserOrAdmin, user.updateUser)
 
+router.delete("/:id", passport.authenticate('jwt', { session: false }), isAdmin, user.deleteUser)
 
 module.exports = router;

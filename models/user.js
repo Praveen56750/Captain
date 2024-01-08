@@ -40,7 +40,6 @@ const userSchema = new mongoose.Schema({
         type: mongoose.Schema.ObjectId,
         ref: 'Organization'
     }
-
 });
 
 userSchema.pre('save', async function (next) {
@@ -56,8 +55,8 @@ userSchema.pre('save', async function (next) {
     next();
 })
 
-userSchema.methods.verifyPassword = async function (candidatePassword, userPassword) {
-    return await bcrypt.compare(candidatePassword, userPassword);
+userSchema.methods.verifyPassword = async function (password, userPassword) {
+    return await bcrypt.compare(password, userPassword);
 };
 
 const User = mongoose.model('User', userSchema);
